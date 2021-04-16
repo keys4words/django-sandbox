@@ -11,8 +11,12 @@ class News(models.Model):
 
     category = models.ForeignKey('Category', on_delete=models.PROTECT, null=True)
 
+    def my_func(self):
+        return 'hello from my_func()'
+
     def __str__(self):
         return f'<{self.title}>'
+
 
 
     class Meta:
