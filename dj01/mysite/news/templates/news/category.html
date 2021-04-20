@@ -7,44 +7,36 @@
 {% endblock %}
 
 {% block sidebar %}
-<div class="col-md-2">
-    <div class="list-group">
-        {% for category in categories %}
-        <a href="{% url 'category' category.pk %}" class="list-group-item">{{ category.title }}</a>
-        {% endfor %}
-    </div>
-</div>
+{% include 'inc/_sidebar.html' %}
 {% endblock %}
 
 {% block content %}
-<div class="col-md-8">
-    {% for el in news %}
-    <div class="card mb-4">
-        <div class="card-body">
-            <h5 class="card-title">News #{{ forloop.counter }}</h5>
-            <h5 class="card-title {% cycle 'text-danger' 'text-success' %}">{{ el.title }}</h5>
-            <a class="card-subtitle mb-2 text-muted" href="{% url 'category' el.category.pk %}">{{ el.category }}</a>
-            <div class="media">
-                {% if el.photo %}
-                <img src="{{ el.photo.url }}" alt="" width="300">
-                {% else %}
-                <img src="https://picsum.photos/seed/picsum/300/200">
-                {% endif %}
-                <div class="media-body">
-                    {% autoescape off %}
-                    <p class="card-text">{{ el.content | truncatewords:3 }}</p>
-                    {% endautoescape %}
-                    <p class="card-text">{% lorem %}</p>
-                    <p class="card-text">{{ el.my_func}}</p>
-                </div>
+{% for el in news %}
+<div class="card mb-4">
+    <div class="card-body">
+        <h5 class="card-title">News #{{ forloop.counter }}</h5>
+        <h5 class="card-title {% cycle 'text-danger' 'text-success' %}">{{ el.title }}</h5>
+        <a class="card-subtitle mb-2 text-muted" href="{% url 'category' el.category.pk %}">{{ el.category }}</a>
+        <div class="media">
+            {% if el.photo %}
+            <img src="{{ el.photo.url }}" alt="" width="300">
+            {% else %}
+            <img src="https://picsum.photos/seed/picsum/300/200">
+            {% endif %}
+            <div class="media-body">
+                {% autoescape off %}
+                <p class="card-text">{{ el.content | truncatewords:3 }}</p>
+                {% endautoescape %}
+                <p class="card-text">{% lorem %}</p>
+                <p class="card-text">{{ el.my_func}}</p>
             </div>
-
-            <h6 class="card-subtitle mb-2 text-muted">{{ el.created_at | date:"d-m-Y H:i"}}</h6>
-            <a href="#" class="btn btn-primary">Details</a>
         </div>
+
+        <h6 class="card-subtitle mb-2 text-muted">{{ el.created_at | date:"d-m-Y H:i"}}</h6>
+        <a href="#" class="btn btn-primary">Details</a>
     </div>
-    {% empty %}
-    <h2 class="my-3 text-danger">There is no news</h2>
-    {% endfor %}
 </div>
+{% empty %}
+<h2 class="my-3 text-danger">There is no news</h2>
+{% endfor %}
 {% endblock %}
