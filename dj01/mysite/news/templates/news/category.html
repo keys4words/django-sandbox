@@ -13,6 +13,9 @@
 {% block content %}
 {% for el in news %}
 <div class="card mb-4">
+    <div class="card-header">
+        Category: <a href="{{ el.category.get_absolute_url }}">{{ el.category }}</a>
+    </div>
     <div class="card-body">
         <h5 class="card-title">News #{{ forloop.counter }}</h5>
         <h5 class="card-title {% cycle 'text-danger' 'text-success' %}">{{ el.title }}</h5>
@@ -27,13 +30,11 @@
                 {% autoescape off %}
                 <p class="card-text">{{ el.content | truncatewords:3 }}</p>
                 {% endautoescape %}
-                <p class="card-text">{% lorem %}</p>
-                <p class="card-text">{{ el.my_func}}</p>
             </div>
         </div>
 
         <h6 class="card-subtitle mb-2 text-muted">{{ el.created_at | date:"d-m-Y H:i"}}</h6>
-        <a href="#" class="btn btn-primary">Details</a>
+        <a href="{{ el.get_absolute_url }}" class="btn btn-primary">Details</a>
     </div>
 </div>
 {% empty %}
